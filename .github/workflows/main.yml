@@ -1,0 +1,26 @@
+name: Add Text to PR Description
+
+on:
+  pull_request:
+    branches:
+      - '*'
+    types: [opened]
+
+jobs:
+  add-text:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+    - name: Add Text to PR Description v2
+      uses: actions/github-script@v4
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          const textToAdd = 'Кулешов Даниил 221-321';
+          const newDescription = textToAdd;
+          github.pulls.update({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number,
+            body: newDescription
+          });
